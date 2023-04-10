@@ -56,7 +56,7 @@ const runAsync = async (count) => {
         const newAccount = web3.eth.accounts.create()
         const { address, privateKey } = newAccount
 
-        const amount = getRandom(0.02, 0.09).toFixed(3)
+        const amount = getRandom(0.02, 0.04).toFixed(3)
         const amountWei = web3.utils.toWei(`${amount}`, 'ether')
 
         logInfo(`Sending ${amount}ETH to address: ${address}`)
@@ -88,7 +88,8 @@ const runAsync = async (count) => {
         }
     }
 
-    writeFileSync('accounts.json', JSON.stringify(accounts, null, 2))
+    const timestamp = Date.parse(new Date().toString()) / 1000
+    writeFileSync(`accounts-${timestamp}.json`, JSON.stringify(accounts, null, 2))
 }
 
 runAsync(1).then(x => logInfo('Done')).catch(x => logInfo(x.message))
